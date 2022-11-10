@@ -5,9 +5,10 @@
 
 function getScore(session_id) {
     var xmlHttp = new XMLHttpRequest();
+    xmlHttp.responseType = 'json';
     xmlHttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            console.log("Prediction: ", xmlHttp.responseText)
+            console.log("Prediction: ", xmlHttp.response.result)
         }
     }
     xmlHttp.open("GET", "/proxy/knight.php?sid=" + encodeURIComponent(session_id), true);
