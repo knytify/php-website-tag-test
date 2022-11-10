@@ -10,7 +10,7 @@ function getScore(session_id) {
             console.log("Prediction: ", xmlHttp.responseText)
         }
     }
-    xmlHttp.open("GET", "/proxy/knight.php?sid=" + session_id, true);
+    xmlHttp.open("GET", "/proxy/knight.php?sid=" + encodeURIComponent(session_id), true);
     xmlHttp.send(null);
 }
 
