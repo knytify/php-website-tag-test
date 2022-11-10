@@ -42,23 +42,22 @@ if(empty($_GET['sid']) || strlen($_GET['sid']) < 40 || strlen($_GET['sid']) > 70
  * Call Knytify to get the scoring.
  */
 
-$headers = ['Content-Type: application/json', 'Api-Key: ' . $API_KEY];
-$payload = json_encode(['sid' => $_GET['sid']]);
+$headers = ['Content-Type: application/json', 'api-key: ' . $API_KEY];
+$payload = http_build_query(['sid' => $_GET['sid']]);
 
-$ch = curl_init( "https://live.knytify.com/predict/" );
+$ch = curl_init(  );
+curl_setopt($ch, CURLOPT_URL, "https://live.knytify.com/predict/");
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $payload );
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_HEADER, true);
-curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+curl_setopt($ch, CURLOPT_HEADER, false);
 
 $output = curl_exec($ch);
 $result_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$request_content_type = curl_getinfo($ch,CURLINFO_CONTENT_TYPE);
 
 $error = null;
 if(curl_errno($ch)) {
@@ -74,7 +73,6 @@ curl_close($ch);
 if(!empty($error)) {
     http_response_code($result_code);
     if($DEBUG) {
-        echo "content type: " . $request_content_type . "\n";
         echo $error;
     }
     exit;
