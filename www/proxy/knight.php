@@ -27,6 +27,7 @@
  * Configuration
  */
 $API_KEY = file_get_contents("api_key.txt");
+$DEBUG = true;
 
 
 /**
@@ -51,6 +52,11 @@ curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 @curl_setopt($ch, CURLOPT_HEADER, true);
 $output = curl_exec($ch);
 $result_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+$error = null;
+if(curl_errno($ch)) {
+    $error = curl_error($ch);
+} 
 curl_close($ch);
 
 
@@ -58,8 +64,11 @@ curl_close($ch);
  * Validate the response
  */
 
-if($result_code != 200) {
+if(!empty($error)) {
     http_response_code($result_code);
+    if($DEBUG) {
+        echo $error;
+    }
     exit;
 }
 
