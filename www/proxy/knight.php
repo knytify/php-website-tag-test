@@ -24,7 +24,7 @@
 /**
  * Configuration
  */
-$API_KEY = "...";
+$API_KEY = file_get_contents("api_key.txt");
 
 
 /**
