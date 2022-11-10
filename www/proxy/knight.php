@@ -32,7 +32,7 @@ $API_KEY = file_get_contents("api_key.txt");
  */
 if(empty($_GET['sid']) || strlen($_GET['sid']) < 60 || strlen($_GET['sid']) > 80) {
     http_response_code(400);
-    exit;
+    die("Wrong SID")
 }
 
 /**
