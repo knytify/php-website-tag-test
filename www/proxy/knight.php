@@ -42,7 +42,7 @@ if(empty($_GET['sid']) || strlen($_GET['sid']) < 40 || strlen($_GET['sid']) > 70
  * Call Knytify to get the scoring.
  */
 
-$headers = ['Content-Type: application/json', 'api-key: ' . $API_KEY];
+$headers = ['Content-Type: application/json', 'api-key: ' . rtrim($API_KEY, '\n\r')];
 $payload = http_build_query(['sid' => $_GET['sid']]);
 
 $ch = curl_init(  );
