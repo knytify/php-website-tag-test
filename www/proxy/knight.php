@@ -43,13 +43,17 @@ if(empty($_GET['sid']) || strlen($_GET['sid']) < 40 || strlen($_GET['sid']) > 70
  */
 
 $headers = ['Content-Type: application/json', 'Api-Key: ' . $API_KEY];
-$payload = ['sid' => $_GET['sid']];
+$payload = json_encode(['sid' => $_GET['sid']]);
 
 $ch = curl_init( "https://live.knytify.com/predict/" );
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers);
-curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-@curl_setopt($ch, CURLOPT_HEADER, true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+// @curl_setopt($ch, CURLOPT_HEADER, true);
 $output = curl_exec($ch);
 $result_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
