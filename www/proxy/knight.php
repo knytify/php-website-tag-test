@@ -42,8 +42,8 @@ if(empty($_GET['sid']) || strlen($_GET['sid']) < 40 || strlen($_GET['sid']) > 70
  * Call Knytify to get the scoring.
  */
 
-$headers = ['Content-Type: multipart/form-data', 'Api-Key: ' . $API_KEY];
-$payload = ['sid' => $_GET['sid']];
+$headers = ['Content-Type: application/json', 'Api-Key: ' . $API_KEY];
+$payload = json_encode(['sid' => $_GET['sid']]);
 
 $ch = curl_init( "https://live.knytify.com/predict/" );
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
