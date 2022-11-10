@@ -26,7 +26,7 @@
 /**
  * Configuration
  */
-$API_KEY = file_get_contents("api_key.txt");
+$API_KEY = str_replace(['\n', '\r'], '', file_get_contents("api_key.txt"));
 $DEBUG = true;
 
 
@@ -42,7 +42,7 @@ if(empty($_GET['sid']) || strlen($_GET['sid']) < 40 || strlen($_GET['sid']) > 70
  * Call Knytify to get the scoring.
  */
 
-$headers = ['Content-Type: application/json; charset=utf-8', 'api-key: ' . rtrim($API_KEY, '\n\r')];
+$headers = ['Content-Type: application/json; charset=utf-8', 'api-key: ' . $API_KEY];
 $payload = json_encode(['sid' => $_GET['sid']]);
 
 $ch = curl_init(  );
