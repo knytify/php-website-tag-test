@@ -30,9 +30,9 @@ $API_KEY = file_get_contents("api_key.txt");
 /**
  * Request validation
  */
-if(empty($_GET['sid']) || strlen($_GET['sid']) < 60 || strlen($_GET['sid']) > 80) {
+if(empty($_GET['sid']) || strlen($_GET['sid']) < 40 || strlen($_GET['sid']) > 70) {
     http_response_code(400);
-    die("Wrong SID")
+    die("Wrong SID");
 }
 
 /**
