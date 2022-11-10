@@ -53,9 +53,12 @@ curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-// @curl_setopt($ch, CURLOPT_HEADER, true);
+curl_setopt($ch, CURLOPT_HEADER, true);
+curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+
 $output = curl_exec($ch);
 $result_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$request_content_type = curl_getinfo($ch,CURLINFO_CONTENT_TYPE);
 
 $error = null;
 if(curl_errno($ch)) {
@@ -71,6 +74,7 @@ curl_close($ch);
 if(!empty($error)) {
     http_response_code($result_code);
     if($DEBUG) {
+        echo "content type: " . $request_content_type . "\n";
         echo $error;
     }
     exit;
