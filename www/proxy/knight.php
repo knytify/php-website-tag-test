@@ -11,8 +11,10 @@
  * Outputs a dictionary where the keys are the indicator keys, and the values fraud-scoring floats (0=safe, 1=bad)
  * 
  * {
- *  "final": 0.952,
- *  "some-indicator": 0.4 
+ *  "result": {
+ *    "final": 0.952,
+ *    "some-indicator": 0.4 
+ *  }
  * }
  * 
  * To see which indicators are available, check our documentation.
@@ -42,7 +44,7 @@ if(empty($_GET['sid']) || strlen($_GET['sid']) < 40 || strlen($_GET['sid']) > 70
 $headers = ['Content-Type: application/json', 'Api-Key: ' . $API_KEY];
 $payload = json_encode(['sid' => $_GET['sid']]);
 
-$ch = curl_init( $url );
+$ch = curl_init( "https://live.knytify.com/predict/" );
 curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
 curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
